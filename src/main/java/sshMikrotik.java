@@ -14,37 +14,22 @@ public class sshMikrotik {
     private static final int SSH_PORT = 22;
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int BUFFER_SIZE = 1024;
-    private static final String HOSTNAME = "172.16.1.1";
-    private static final String USERNAME = "denyUser";
-    private static final String PASSWORD = "111";
-
-    public static void main(String[] args) {
-
-        sshMikrotik manager = new sshMikrotik();
-        //List<String> lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD);
-        List<String> lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD);
-
-        System.out.println(lines);
-    }
-    public List<String> connectAndExecuteListCommand(String host, String username, String password) {
-        List<String> lines = new ArrayList<String>();
+    public String connectAndExecuteListCommand(String host, String username, String password,String command) {
+        String response="no data";
         try {
-            String command = "ip address print";
             Session session = initSession(host, username, password);
             Channel channel = initChannel(command, session);
             InputStream in = channel.getInputStream();
             channel.connect();
             String dataFromChannel = getDataFromChannel(channel, in);
-            System.out.println("222");
-            System.out.println(dataFromChannel);
-            System.out.println("111");
-            lines.addAll(Arrays.asList(dataFromChannel.split("\n")));
+            //System.out.println(dataFromChannel);
+            response = dataFromChannel;
             channel.disconnect();
             session.disconnect();
         } catch (Exception e) {
             System.out.println(e);
         }
-        return lines;
+        return response;
     }
     private Session initSession(String host, String username, String password) throws JSchException {
         JSch jsch = new JSch();
