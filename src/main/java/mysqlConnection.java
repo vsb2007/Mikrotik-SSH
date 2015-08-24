@@ -1,31 +1,43 @@
 /**
  * Created by VSB on 06.08.2015.
  */
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import java.sql.Statement;
+import java.sql.*;
 
 public class mysqlConnection {
+        private String dbUrl;
+        private String dbClass;
+        private String dbName;
+        private String username;
+        private String password;
 
-        public void testConnect() {
-            String dbUrl = "jdbc:mysql://192.168.19.20/dropGos";
-            String dbClass = "com.mysql.jdbc.Driver";
-            String query = "Select distinct(table_name) from INFORMATION_SCHEMA.TABLES";
-            String username = "dropGosUser";
-            String password = "dropGosPassword";
+    public mysqlConnection(String dbUrl, String dbClass, String dbName, String username, String password) {
+        this.dbUrl = dbUrl+"/"+dbName;
+        this.dbClass = dbClass;
+        this.dbName = dbName;
+        this.username = username;
+        this.password = password;
+    }
+    private Connection connection;
+    private Statement statement;
+    private ResultSet resultSet;
+    private PreparedStatement preparedStatement;
+    enum TestTableColumns{
+        id_list1,ip1;
+    }
+    public void testConnect() {
+
+            String query = "select * from "+dbName+".list1";
+            System.out.println(dbUrl);
             try {
-
                 Class.forName(dbClass);
-                Connection connection = DriverManager.getConnection(dbUrl,
-                        username, password);
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
+                connection = DriverManager.getConnection(dbUrl, username, password);
+                statement = connection.createStatement();
+                resultSet = statement.executeQuery(query);
                 while (resultSet.next()) {
-                    String tableName = resultSet.getString(1);
-                    System.out.println("Table name : " + tableName);
+                    Integer id = resultSet.getInt(TestTableColumns.id_list1.toString());
+                    String text = resultSet.getString(TestTableColumns.ip1.toString());
+                    System.out.println("id: "+id);
+                    System.out.println("text: "+text);
                 }
                 connection.close();
             } catch (ClassNotFoundException e) {
