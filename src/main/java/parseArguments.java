@@ -81,9 +81,7 @@ public class parseArguments {
                 MainSolution.ipFILE = value;
                 //System.out.println(dbCLASS);
             }
-            else {
-                //System.out.println(line);
-            }
+
         }
     }
 }
