@@ -99,7 +99,8 @@ public class sshMikrotik {
             }
             if (channel.isClosed()) {
                 int exitStatus = channel.getExitStatus();
-                System.out.println("exit-status: " + exitStatus);
+                if (exitStatus!=0)
+                    System.out.println("exit-status: " + exitStatus);
                 break;
             }
             trySleep(1000);

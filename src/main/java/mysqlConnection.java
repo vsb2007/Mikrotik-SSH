@@ -35,6 +35,7 @@ public class mysqlConnection {
         preparedStatement = this.connection.prepareStatement(query);
         //preparedStatement.setString(1,"");
         preparedStatement.executeUpdate();
+        //System.out.println();
     }
 }
 

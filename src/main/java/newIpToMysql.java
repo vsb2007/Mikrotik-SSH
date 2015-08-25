@@ -19,7 +19,12 @@ public class newIpToMysql {
             String line = input.readLine();
             sql += "(\""+ line + "\")";
             i++;
-            if (i>10) break;
+            if (i>1000){
+                connection.putInsertQuery(sql);
+                i=0;
+                sql = "insert into list1 (ip1) values ";
+                continue;
+            }
             if (input.ready()) sql += ",";
         }
         //sql += "";
