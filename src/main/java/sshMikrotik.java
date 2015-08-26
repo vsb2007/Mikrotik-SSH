@@ -2,9 +2,6 @@ import com.jcraft.jsch.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by VSB on 05.08.2015.
