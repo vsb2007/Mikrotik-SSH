@@ -2,12 +2,13 @@
   <artifact type="jar" build-on-make="true" name="mikGosDrop">
     <output-path>$PROJECT_DIR$/out/artifacts/mikGosDrop</output-path>
     <root id="archive" name="mikGosDrop.jar">
-      <element id="module-output" name="Mikrotik-SSH" />
       <element id="library" level="project" name="Maven: com.jcraft:jsch:0.1.53" />
-      <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.36" />
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
+      <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.36" />
+      <element id="module-output" name="Mikrotik-SSH" />
+      <element id="dir-copy" path="D:/tmp/1" />
     </root>
   </artifact>
 </component>

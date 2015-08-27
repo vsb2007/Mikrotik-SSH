@@ -34,14 +34,13 @@ public class MainSolution {
         newIpToMysql.newIpToMysql(ipFILE,connection);
 
         sshMikrotik manager = new sshMikrotik();
-        String command;// = "ip firewall address-list print terse where list=dropGos";
-        String lines; //= manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
+        String command;
+        String lines;
         command = "ip firewall address-list print terse where list=dropGos";
         lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
 
         getIpFromMikToMysql.getIpFromMikToMysql(lines,connection);
 
-        //String sql = "select * from (select * from list2 left join list1 on ip2 = ip1 ) sel where sel.ip1 is null";
         ResultSet resultSet;// = connection.getSelectQuery(
         resultSet = connection.getSelectQuery(
                 "select * from (select * from list2 left join list1 on ip2 = ip1 ) sel where sel.ip1 is null");
@@ -56,9 +55,6 @@ public class MainSolution {
             count2++;
             Integer id = resultSet.getInt(TableColumns2.id_list2.toString());
             String text = resultSet.getString(TableColumns2.ip2.toString());
-            //System.out.println("id: "+id);
-            //System.out.println("text: "+text);
-            //ip firewall address-list remove [find address=192.168.0.2]
             command += id;
             if (count2%100==0)
             {
@@ -68,8 +64,6 @@ public class MainSolution {
                 continue;
             }
             if (!resultSet.isLast()) command += ",";
-
-
         }
         if (flag1){
             lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
@@ -91,11 +85,9 @@ public class MainSolution {
             if (count%100==0)
             {
                 lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
-                //System.out.println(command);
                 command="";
             }
         }
-        //System.out.println(count2);
         if (flag1){
             lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
             flag1=false;
