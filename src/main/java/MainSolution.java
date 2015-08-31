@@ -10,6 +10,7 @@ public class MainSolution {
     public static String HOSTNAME="";
     public static String USERNAME="";
     public static String PASSWORD="";
+    public static String dropLIST="";
     public static String dbHOSTNAME="";
     public static String dbNAME="";
     public static String dbCLASS="";
@@ -36,14 +37,15 @@ public class MainSolution {
         sshMikrotik manager = new sshMikrotik();
         String command;
         String lines;
-        command = "ip firewall address-list print terse where list=dropGos";
+        //command = "ip firewall address-list print terse where list=dropGos";
+        command = "ip firewall address-list print terse";
         lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
 
-        getIpFromMikToMysql.getIpFromMikToMysql(lines,connection);
+        getIpFromMikToMysql.getIpFromMikToMysql(lines,connection,dropLIST);
 
         ResultSet resultSet;// = connection.getSelectQuery(
         resultSet = connection.getSelectQuery(
-                "select * from (select * from list2 left join list1 on ip2 = ip1 ) sel where sel.ip1 is null");
+                "select * from (select * from list2 left join list1 on ip2 = ip1 ) sel where sel.ip1 is null order by id_list2 desc");
 
         command = "";
 
@@ -81,7 +83,7 @@ public class MainSolution {
             count++;
             Integer id = resultSet.getInt(TableColumns1.id_list1.toString());
             String text = resultSet.getString(TableColumns1.ip1.toString());
-            command += "ip firewall address-list add list=dropGos address="+text+";";
+            command += "ip firewall address-list add list="+dropLIST+" address="+text+";";
             if (count%100==0)
             {
                 lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);

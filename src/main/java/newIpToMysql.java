@@ -10,7 +10,9 @@ public class newIpToMysql {
     {
         BufferedReader input = new BufferedReader(new FileReader(filename));
         //String line;
-        String sql = "delete from list1";
+        //String sql = "delete from list1";
+        String sql = "TRUNCATE list1";
+
         connection.putInsertQuery(sql);
         sql = "insert into list1 (ip1) values ";
         //String sql = "";
