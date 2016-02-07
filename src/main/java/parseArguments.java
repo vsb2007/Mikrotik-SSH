@@ -4,79 +4,52 @@ import java.io.FileReader;
 /**
  * Created by VSB on 24.08.2015.
  */
-public class parseArguments {
-    public static void parseArguments(String arg) throws Exception
-    {
+public class ParseArguments {
+    public static void parseArguments(String arg) throws Exception {
         BufferedReader input = new BufferedReader(new FileReader(arg));
         String line;
         while ((line = input.readLine()) != null) {
-            String param="";
-            String value="";
+            String param = "";
+            String value = "";
             char[] chars = line.toCharArray();
-            boolean flag=false;
+            boolean flag = false;
             if (chars[0] == '#' || chars[0] == ';') continue;
-            for (int i=0; i<chars.length; i++)
-            {
-                if (chars[i] == '=')
-                {
+            for (int i = 0; i < chars.length; i++) {
+                if (chars[i] == '=') {
                     flag = true;
                     continue;
                 }
-                if (chars[i]!=' ' && !flag)
-                {
+                if (chars[i] != ' ' && !flag) {
                     param += chars[i];
                     continue;
                 }
-                if (flag)
-                {
-                    if (chars[i]!=' ' && chars[i]!='"' && chars[i]!=';')
-                    {
+                if (flag) {
+                    if (chars[i] != ' ' && chars[i] != '"' && chars[i] != ';') {
                         value += chars[i];
                     }
                 }
-
             }
-            if (param.equals("mik_host"))
-            {
+            if (param.equals("mik_host")) {
                 MainSolution.HOSTNAME = value;
-            }
-            else if (param.equals("mik_user"))
-            {
+            } else if (param.equals("mik_user")) {
                 MainSolution.USERNAME = value;
-            }
-            else if (param.equals("mik_password"))
-            {
+            } else if (param.equals("mik_password")) {
                 MainSolution.PASSWORD = value;
-            }
-            else if (param.equals("mik_list"))
-            {
+            } else if (param.equals("mik_list")) {
                 MainSolution.dropLIST = value;
-            }
-            else if (param.equals("db_url"))
-            {
+            } else if (param.equals("db_url")) {
                 MainSolution.dbHOSTNAME = value;
-            }
-            else if (param.equals("db_name"))
-            {
+            } else if (param.equals("db_name")) {
                 MainSolution.dbNAME = value;
-            }
-            else if (param.equals("db_username"))
-            {
+            } else if (param.equals("db_username")) {
                 MainSolution.dbUSERNAME = value;
-            }
-            else if (param.equals("db_password"))
-            {
+            } else if (param.equals("db_password")) {
                 MainSolution.dbPASSWORD = value;
-            }
-            else if (param.equals("db_class"))
-            {
+            } else if (param.equals("db_class")) {
                 MainSolution.dbCLASS = value;
-            }
-            else if (param.equals("ip_file"))
-            {
+            } else if (param.equals("ip_file")) {
                 MainSolution.ipFILE = value;
             }
-
         }
     }
 }
