@@ -10,6 +10,7 @@ public class MainSolution {
     public static String HOSTNAME="";
     public static String USERNAME="";
     public static String PASSWORD="";
+    public static String dropLIST="";
     public static String dbHOSTNAME="";
     public static String dbNAME="";
     public static String dbCLASS="";
@@ -34,17 +35,17 @@ public class MainSolution {
         newIpToMysql.newIpToMysql(ipFILE,connection);
 
         sshMikrotik manager = new sshMikrotik();
-        String command;// = "ip firewall address-list print terse where list=dropGos";
-        String lines; //= manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
-        command = "ip firewall address-list print terse where list=dropGos";
+        String command;
+        String lines;
+        //command = "ip firewall address-list print terse where list=dropGos";
+        command = "ip firewall address-list print terse";
         lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
 
-        getIpFromMikToMysql.getIpFromMikToMysql(lines,connection);
+        getIpFromMikToMysql.getIpFromMikToMysql(lines,connection,dropLIST);
 
-        //String sql = "select * from (select * from list2 left join list1 on ip2 = ip1 ) sel where sel.ip1 is null";
         ResultSet resultSet;// = connection.getSelectQuery(
         resultSet = connection.getSelectQuery(
-                "select * from (select * from list2 left join list1 on ip2 = ip1 ) sel where sel.ip1 is null");
+                "select * from (select * from list2 left join list1 on ip2 = ip1 ) sel where sel.ip1 is null order by id_list2 desc");
 
         command = "";
 
@@ -56,9 +57,6 @@ public class MainSolution {
             count2++;
             Integer id = resultSet.getInt(TableColumns2.id_list2.toString());
             String text = resultSet.getString(TableColumns2.ip2.toString());
-            //System.out.println("id: "+id);
-            //System.out.println("text: "+text);
-            //ip firewall address-list remove [find address=192.168.0.2]
             command += id;
             if (count2%100==0)
             {
@@ -68,8 +66,6 @@ public class MainSolution {
                 continue;
             }
             if (!resultSet.isLast()) command += ",";
-
-
         }
         if (flag1){
             lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
@@ -87,15 +83,13 @@ public class MainSolution {
             count++;
             Integer id = resultSet.getInt(TableColumns1.id_list1.toString());
             String text = resultSet.getString(TableColumns1.ip1.toString());
-            command += "ip firewall address-list add list=dropGos address="+text+";";
+            command += "ip firewall address-list add list="+dropLIST+" address="+text+";";
             if (count%100==0)
             {
                 lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
-                //System.out.println(command);
                 command="";
             }
         }
-        //System.out.println(count2);
         if (flag1){
             lines = manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
             flag1=false;

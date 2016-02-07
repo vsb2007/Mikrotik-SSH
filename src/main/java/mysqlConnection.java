@@ -19,12 +19,10 @@ public class mysqlConnection {
         this.dbName = dbName;
         this.username = username;
         this.password = password;
-
-            connection = DriverManager.getConnection(this.dbUrl, username, password);
-            Class.forName(dbClass);
-            statement = connection.createStatement();
-            //preparedStatement = connection.prepareStatement("insert into list1 values (default,?)");
-
+        //Class.forName(dbClass);
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        connection = DriverManager.getConnection(this.dbUrl, username, password);
+        statement = connection.createStatement();
     }
     public ResultSet getSelectQuery(String query) throws Exception{
 
@@ -33,9 +31,7 @@ public class mysqlConnection {
     public void putInsertQuery(String query) throws Exception
     {
         preparedStatement = this.connection.prepareStatement(query);
-        //preparedStatement.setString(1,"");
         preparedStatement.executeUpdate();
-        //System.out.println();
     }
 }
 

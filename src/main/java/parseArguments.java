@@ -39,47 +39,42 @@ public class parseArguments {
             if (param.equals("mik_host"))
             {
                 MainSolution.HOSTNAME = value;
-                //System.out.println(HOSTNAME);
             }
             else if (param.equals("mik_user"))
             {
                 MainSolution.USERNAME = value;
-                //System.out.println(USERNAME);
             }
             else if (param.equals("mik_password"))
             {
                 MainSolution.PASSWORD = value;
-                //System.out.println(PASSWORD);
+            }
+            else if (param.equals("mik_list"))
+            {
+                MainSolution.dropLIST = value;
             }
             else if (param.equals("db_url"))
             {
                 MainSolution.dbHOSTNAME = value;
-                //System.out.println(dbHOSTNAME);
             }
             else if (param.equals("db_name"))
             {
                 MainSolution.dbNAME = value;
-                //System.out.println(dbNAME);
             }
             else if (param.equals("db_username"))
             {
                 MainSolution.dbUSERNAME = value;
-                //System.out.println(dbUSERNAME);
             }
             else if (param.equals("db_password"))
             {
                 MainSolution.dbPASSWORD = value;
-                //System.out.println(dbPASSWORD);
             }
             else if (param.equals("db_class"))
             {
                 MainSolution.dbCLASS = value;
-                //System.out.println(dbCLASS);
             }
             else if (param.equals("ip_file"))
             {
                 MainSolution.ipFILE = value;
-                //System.out.println(dbCLASS);
             }
 
         }
