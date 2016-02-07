@@ -7,27 +7,27 @@ import java.io.InputStream;
  * Created by VSB on 05.08.2015.
  */
 
-public class sshMikrotik {
+public class SshMikrotik {
     private static final int SSH_PORT = 22;
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int BUFFER_SIZE = 1024;
-    public String connectAndExecuteListCommand(String host, String username, String password,String command) {
-        String response="no data";
+
+    public String connectAndExecuteListCommand(String host, String username, String password, String command) {
+        String response = "no data";
         try {
             Session session = initSession(host, username, password);
             Channel channel = initChannel(command, session);
             InputStream in = channel.getInputStream();
             channel.connect();
-            String dataFromChannel = getDataFromChannel(channel, in);
-            //System.out.println(dataFromChannel);
-            response = dataFromChannel;
+            response = getDataFromChannel(channel, in);
             channel.disconnect();
             session.disconnect();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getStackTrace().toString());
         }
         return response;
     }
+
     private Session initSession(String host, String username, String password) throws JSchException {
         JSch jsch = new JSch();
         Session session = jsch.getSession(username, host, SSH_PORT);
@@ -38,8 +38,8 @@ public class sshMikrotik {
         session.connect(CONNECTION_TIMEOUT);
         return session;
     }
-    public class MyUserInfo implements UserInfo {
 
+    public class MyUserInfo implements UserInfo {
         private String password;
 
         public void showMessage(String message) {
@@ -74,6 +74,7 @@ public class sshMikrotik {
             return true;
         }
     }
+
     private Channel initChannel(String commands, Session session) throws JSchException {
         Channel channel = session.openChannel("exec");
         ChannelExec channelExec = (ChannelExec) channel;
@@ -82,6 +83,7 @@ public class sshMikrotik {
         channelExec.setErrStream(System.err);
         return channel;
     }
+
     private String getDataFromChannel(Channel channel, InputStream in)
             throws IOException {
         StringBuilder result = new StringBuilder();
@@ -96,7 +98,7 @@ public class sshMikrotik {
             }
             if (channel.isClosed()) {
                 int exitStatus = channel.getExitStatus();
-                if (exitStatus!=0)
+                if (exitStatus != 0)
                     System.out.println("exit-status: " + exitStatus);
                 break;
             }
@@ -104,11 +106,12 @@ public class sshMikrotik {
         }
         return result.toString();
     }
+
     private void trySleep(int sleepTimeInMilliseconds) {
         try {
             Thread.sleep(sleepTimeInMilliseconds);
         } catch (Exception e) {
+            System.out.println(e.getStackTrace().toString());
         }
     }
-
 }
