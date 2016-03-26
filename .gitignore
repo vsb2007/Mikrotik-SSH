@@ -13,5 +13,7 @@ hs_err_pid*
 .idea
 out/
 /lib/
-/META_INF/**
-/target/**
+/META_INF/
+META_INF/
+/target/
+target/
