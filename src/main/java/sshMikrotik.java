@@ -3,10 +3,6 @@ import com.jcraft.jsch.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by VSB on 05.08.2015.
- */
-
 public class SshMikrotik {
     private static final int SSH_PORT = 22;
     private static final int CONNECTION_TIMEOUT = 10000;

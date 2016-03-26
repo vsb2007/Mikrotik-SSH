@@ -1,8 +1,5 @@
 import java.sql.ResultSet;
 
-/**
- * Created by VSB on 05.08.2015.
- */
 public class MainSolution {
     public static String HOSTNAME = "";
     public static String USERNAME = "";
@@ -78,7 +75,6 @@ public class MainSolution {
         }
         if (flag1) {
             manager.connectAndExecuteListCommand(HOSTNAME, USERNAME, PASSWORD, command);
-            //flag1 = false;
         }
     }
 }

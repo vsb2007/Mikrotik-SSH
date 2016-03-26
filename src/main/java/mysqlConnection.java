@@ -1,8 +1,3 @@
-
-/**
- * Created by VSB on 06.08.2015.
- */
-
 import java.sql.*;
 
 public class MysqlConnection {

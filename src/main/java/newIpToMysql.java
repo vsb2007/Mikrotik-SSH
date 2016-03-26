@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-/**
- * Created by VSB on 24.08.2015.
- */
 public class NewIpToMysql {
     public static void newIpToMysql(String filename, MysqlConnection connection) throws Exception {
         BufferedReader input = new BufferedReader(new FileReader(filename));

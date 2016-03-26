@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-/**
- * Created by VSB on 24.08.2015.
- */
 public class ParseArguments {
     public static void parseArguments(String arg) throws Exception {
         BufferedReader input = new BufferedReader(new FileReader(arg));

@@ -1,6 +1,3 @@
-/**
- * Created by VSB on 24.08.2015.
- */
 public class GetIpFromMikToMysql {
     public static void getIpFromMikToMysql(String lines, MysqlConnection connection, String dropLIST) throws Exception {
         String[] strings = lines.split("\n");
@@ -33,7 +30,6 @@ public class GetIpFromMikToMysql {
                     }
                 }
             }
-
         }
         if (strings.length - 1 > 1) {
             connection.putInsertQuery(sql);
